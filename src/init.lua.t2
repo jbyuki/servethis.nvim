@@ -1,0 +1,89 @@
+:: ../lua/servethis/init.lua
+local M = {}
+function M.start_server(port)
+  ; save current file path
+  ; fill port with default if no given
+  ; start server
+  print("Server running on port", port, "serving", filepath)
+end
+return M
+
+;; fill port with default if no given
+port = port or 8093
+
+;; start server
+local server = vim.uv.new_tcp()
+server:bind("127.0.0.1", port)
+server:listen(128, function(err)
+  assert(not err, err)
+  ; accept client
+  ; client coroutine
+  ; start read client
+end)
+
+;; accept client
+local client = vim.uv.new_tcp()
+server:accept(client)
+
+;; start read client
+client:read_start(function (err, chunk)
+  assert(not err, err)
+  if chunk then
+    coroutine.resume(client_co, chunk)
+  else
+    client:shutdown()
+    client:close()
+  end
+end)
+
+;; client coroutine
+local client_co = coroutine.create(function (chunk)
+  while true do
+    ; if chunk terminates process it
+    else
+      chunk = chunk .. coroutine.yield()
+    end
+  end
+end)
+
+;; if chunk terminates process it
+if chunk:find("\r\n\r\n") then
+  local s,e = chunk:find("\r\n\r\n")
+  local msg = chunk:sub(1,s-1)
+  ; process message
+  chunk = chunk:sub(e+1)
+
+;; process message
+if #msg > 3 and msg:sub(1,3) == "GET" then
+  ; read file path
+  ; create http header
+  ; write back response
+end
+
+;; save current file path
+local filepath = vim.api.nvim_buf_get_name(0)
+
+;; read file path
+local f = io.open(filepath)
+local content = ""
+if not f then
+  content = "ERROR READING " .. filepath
+else
+  content = f:read("*a")
+  f:close()
+end
+
+;; create http header
+; create status line
+; create content header
+
+;; create status line
+local header = ""
+header = "HTTP/1.1 200 OK\r\n"
+
+;; create content header
+header = header .. "Content-Length: " .. #content .. "\r\n"
+header = header .. "Content-Type: text/html" .. "\r\n"
+
+;; write back response
+client:write(header .. "\r\n" .. content)
