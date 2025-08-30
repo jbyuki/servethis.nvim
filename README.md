@@ -2,7 +2,7 @@
 
 Use Neovim as an HTTP server.
 
-### Install
+## Install
 
 Install using your prefered method.
 
@@ -25,7 +25,7 @@ Install using your prefered method.
 </details>
 
 
-### Quickstart
+## Quickstart
 
 Open an .html page and execute
 
